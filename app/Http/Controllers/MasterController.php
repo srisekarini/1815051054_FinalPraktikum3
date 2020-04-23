@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 
 use App\Dokumen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MasterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Gate::allows('admin')) return $next($request);
+            abort(403, 'Anda tidak memiliki cukup hak akses!');
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -51,8 +59,8 @@ class MasterController extends Controller
             'nama' =>'required',
             'jenis' => 'required'
         ],$messages);
-        Dokumen::create($validasi); 
-        return redirect('/')->with('success', 'Data berhasil ditambahkan!'); 
+        Dokumen::create($validasi);
+        return redirect('/')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -98,8 +106,8 @@ class MasterController extends Controller
             'nama' =>'required',
             'jenis' => 'required'
         ],$messages);
-        Dokumen::whereid($id)->update($validasi); 
-        return redirect('/')->with('success', 'Data berhasil diupdate!'); 
+        Dokumen::whereid($id)->update($validasi);
+        return redirect('/')->with('success', 'Data berhasil diupdate!');
     }
 
     /**
@@ -110,7 +118,7 @@ class MasterController extends Controller
      */
     public function destroy($id)
     {
-        Dokumen::whereid($id)->delete(); 
-    return redirect('/')->with('success', 'Data berhasil diupdate!'); 
+        Dokumen::whereid($id)->delete();
+    return redirect('/')->with('success', 'Data berhasil diupdate!');
     }
 }

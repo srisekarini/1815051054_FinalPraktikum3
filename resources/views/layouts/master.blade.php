@@ -139,7 +139,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{{asset('adminlte/img/sekar2.jpg')}}">
-              <span class="hidden-xs">Ketut Sri Sekarini</span>
+              <span class="hidden-xs">{{ Auth::user()->name }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -147,7 +147,7 @@
                 <img src="{{asset('adminlte/img/sekar2.jpg')}}">
 
                 <p>
-                  Ketut Sri Sekarini - Web Developer
+                  {{ Auth::user()->name }}
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -172,7 +172,11 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ route('logout') }}"  onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">Sign out</a>
+ <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                 </div>
               </li>
             </ul>
@@ -198,7 +202,7 @@
           <img src="{{asset('adminlte/img/sekar2.jpg')}}">
         </div>
         <div class="pull-left info">
-          <p>Ketut Sri Sekarini</p>
+          <p>{{ Auth::user()->name }}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
